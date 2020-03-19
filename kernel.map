@@ -1,0 +1,384 @@
+Archive member included to satisfy reference by file (symbol)
+
+/usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+                              /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o (memcpy)
+/usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+                              /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o (memset)
+/usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+                              /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o (strncpy)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RESERVED         0x0000000000000000 0x0000000000008000 r
+INIT_RAM         0x0000000000008000 0x0000000000008000 xrw
+RAM              0x0000000000010000 0x0000000008000000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+LOAD /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/Demo/startup.o
+LOAD /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+
+.init           0x0000000000008000       0xa4
+ *(.init)
+ .init          0x0000000000008000       0xa4 /home/mcor/tinhnn/PiRTOS/build/Demo/startup.o
+                0x0000000000008000                _start
+
+.module_entries
+                0x00000000000080a4        0x0
+                0x00000000000080a4                __module_entries_start = .
+ *(.module_entries)
+ *(.module_entries.*)
+                0x00000000000080a4                __module_entries_end = .
+                0x0000000000000000                __module_entries_size = SIZEOF (.module_entries)
+
+.text           0x0000000000010000     0x4718
+ *(.text)
+ .text          0x0000000000010000      0x344 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+                0x0000000000010000                pxPortInitialiseStack
+                0x0000000000010240                xPortStartScheduler
+                0x000000000001025c                vPortEndScheduler
+                0x0000000000010274                vTickISR
+ .text          0x0000000000010344      0x2ac /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+                0x0000000000010344                vPortISRStartFirstTask
+                0x00000000000103dc                vPortYieldProcessor
+                0x0000000000010490                vFreeRTOS_ISR
+                0x0000000000010540                vPortEnterCritical
+                0x0000000000010584                vPortExitCritical
+ .text          0x00000000000105f0      0x764 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+                0x00000000000105f0                xCoRoutineCreate
+                0x0000000000010758                vCoRoutineAddToDelayedList
+                0x0000000000010af8                vCoRoutineSchedule
+                0x0000000000010cc8                xCoRoutineRemoveFromEventList
+ .text          0x0000000000010d54      0x29c /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+                0x0000000000010d54                vListInitialise
+                0x0000000000010dbc                vListInitialiseItem
+                0x0000000000010de8                vListInsertEnd
+                0x0000000000010e80                vListInsert
+                0x0000000000010f58                vListRemove
+ .text          0x0000000000010ff0      0xbb0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+                0x0000000000010ff0                xQueueGenericReset
+                0x0000000000011104                xQueueGenericCreate
+                0x00000000000111cc                xQueueGenericSend
+                0x0000000000011370                xQueueGenericSendFromISR
+                0x000000000001144c                xQueueGenericReceive
+                0x0000000000011650                xQueueReceiveFromISR
+                0x0000000000011730                uxQueueMessagesWaiting
+                0x0000000000011764                uxQueueMessagesWaitingFromISR
+                0x0000000000011794                vQueueDelete
+                0x0000000000011acc                xQueueIsQueueEmptyFromISR
+                0x0000000000011b58                xQueueIsQueueFullFromISR
+ .text          0x0000000000011ba0     0x1920 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+                0x0000000000011ba0                xTaskGenericCreate
+                0x0000000000011de8                vTaskDelete
+                0x0000000000011ee8                vTaskDelayUntil
+                0x0000000000011ff8                vTaskDelay
+                0x000000000001207c                uxTaskPriorityGet
+                0x00000000000120d4                vTaskPrioritySet
+                0x000000000001227c                vTaskSuspend
+                0x0000000000012380                xTaskIsTaskSuspended
+                0x00000000000123fc                vTaskResume
+                0x00000000000124f4                xTaskResumeFromISR
+                0x0000000000012610                vTaskStartScheduler
+                0x00000000000126ac                vTaskEndScheduler
+                0x00000000000126e4                vTaskSuspendAll
+                0x0000000000012714                xTaskResumeAll
+                0x00000000000128b8                xTaskGetTickCount
+                0x00000000000128ec                xTaskGetTickCountFromISR
+                0x0000000000012924                uxTaskGetNumberOfTasks
+                0x0000000000012948                vTaskIncrementTick
+                0x0000000000012b64                vTaskSetApplicationTaskTag
+                0x0000000000012bc0                xTaskGetApplicationTaskTag
+                0x0000000000012c1c                xTaskCallApplicationTaskHook
+                0x0000000000012c98                vTaskSwitchContext
+                0x0000000000012da0                vTaskPlaceOnEventList
+                0x0000000000012e3c                xTaskRemoveFromEventList
+                0x0000000000012f54                vTaskSetTimeOutState
+                0x0000000000012f9c                xTaskCheckForTimeOut
+                0x0000000000013090                vTaskMissedYield
+ .text          0x00000000000134c0      0x3a0 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+                0x0000000000013570                irqHandler
+                0x0000000000013610                irqUnblock
+                0x000000000001362c                irqBlock
+                0x0000000000013648                irqRegister
+                0x00000000000136ac                irqEnable
+                0x0000000000013780                irqDisable
+ .text          0x0000000000013860      0x5d8 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+                0x0000000000013860                SetGpioFunction
+                0x000000000001393c                SetGpioDirection
+                0x0000000000013970                SetGpio
+                0x0000000000013a28                ReadGpio
+                0x0000000000013a78                EnableGpioDetect
+                0x0000000000013c28                DisableGpioDetect
+                0x0000000000013de0                ClearGpioInterrupt
+ .text          0x0000000000013e38      0x4ac /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+                0x0000000000013e38                pvPortMalloc
+                0x0000000000014000                vPortFree
+                0x000000000001407c                xPortGetFreeHeapSize
+                0x00000000000140a0                vPortInitialiseBlocks
+ .text          0x00000000000142e4       0x18 /home/mcor/tinhnn/PiRTOS/build/Demo/startup.o
+ .text          0x00000000000142fc      0x118 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+                0x00000000000142fc                task1
+                0x0000000000014338                task2
+                0x000000000001437c                main
+ .text          0x0000000000014414      0x114 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+                0x0000000000014414                memcpy
+ .text          0x0000000000014528      0x114 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+                0x0000000000014528                memset
+ .text          0x000000000001463c       0xdc /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+                0x000000000001463c                strncpy
+
+.rodata         0x0000000000014718       0x2a
+ .rodata        0x0000000000014718        0x4 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .rodata        0x000000000001471c        0x5 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ *fill*         0x0000000000014721        0x3 
+ .rodata        0x0000000000014724        0x4 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .rodata        0x0000000000014728        0x4 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+                0x0000000000014728                pRegs
+ .rodata        0x000000000001472c        0x8 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .rodata        0x0000000000014734        0xe /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+
+.glue_7         0x0000000000014744        0x0
+ .glue_7        0x0000000000014744        0x0 linker stubs
+
+.glue_7t        0x0000000000014744        0x0
+ .glue_7t       0x0000000000014744        0x0 linker stubs
+
+.vfp11_veneer   0x0000000000014744        0x0
+ .vfp11_veneer  0x0000000000014744        0x0 linker stubs
+
+.v4_bx          0x0000000000014744        0x0
+ .v4_bx         0x0000000000014744        0x0 linker stubs
+
+.iplt           0x0000000000014744        0x0
+ .iplt          0x0000000000014744        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+
+.rel.dyn        0x0000000000014744        0x0
+ .rel.iplt      0x0000000000014744        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+
+.data           0x0000000000014744        0xc
+ *(.data)
+ .data          0x0000000000014744        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .data          0x0000000000014744        0x4 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+                0x0000000000014744                ulCriticalNesting
+ .data          0x0000000000014748        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+ .data          0x0000000000014748        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .data          0x0000000000014748        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .data          0x0000000000014748        0x4 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ .data          0x000000000001474c        0x0 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .data          0x000000000001474c        0x0 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .data          0x000000000001474c        0x4 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .data          0x0000000000014750        0x0 /home/mcor/tinhnn/PiRTOS/build/Demo/startup.o
+ .data          0x0000000000014750        0x0 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .data          0x0000000000014750        0x0 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .data          0x0000000000014750        0x0 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .data          0x0000000000014750        0x0 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+
+.igot.plt       0x0000000000014750        0x0
+ .igot.plt      0x0000000000014750        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+
+.bss            0x0000000000014750     0x13e0
+                0x0000000000014750                __bss_start = .
+ *(.bss)
+ .bss           0x0000000000014750        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .bss           0x0000000000014750        0x4 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+                0x0000000000014750                g_bStarted
+ .bss           0x0000000000014754       0x80 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+                0x00000000000147c0                pxCurrentCoRoutine
+ .bss           0x00000000000147d4        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .bss           0x00000000000147d4        0x0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .bss           0x00000000000147d4      0x100 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+                0x00000000000147d4                pxCurrentTCB
+ .bss           0x00000000000148d4      0x24c /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .bss           0x0000000000014b20        0x0 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .bss           0x0000000000014b20     0x1010 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+                0x0000000000015b2c                allocated
+ .bss           0x0000000000015b30        0x0 /home/mcor/tinhnn/PiRTOS/build/Demo/startup.o
+ .bss           0x0000000000015b30        0x0 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .bss           0x0000000000015b30        0x0 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .bss           0x0000000000015b30        0x0 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .bss           0x0000000000015b30        0x0 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+ *(.bss.*)
+                0x0000000000015b30                __bss_end = .
+                0x0000000008010000                _estack = (ORIGIN (RAM) + LENGTH (RAM))
+LOAD /usr/lib/gcc/arm-none-eabi/6.3.1//libgcc.a
+LOAD /usr/lib/arm-none-eabi/lib//libc.a
+OUTPUT(kernel.elf elf32-littlearm)
+
+.debug_info     0x0000000000000000     0x64cf
+ .debug_info    0x0000000000000000      0x1ff /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .debug_info    0x00000000000001ff      0x187 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+ .debug_info    0x0000000000000386      0x474 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+ .debug_info    0x00000000000007fa      0xa94 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .debug_info    0x000000000000128e      0xf31 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .debug_info    0x00000000000021bf     0x1536 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ .debug_info    0x00000000000036f5      0x2b7 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .debug_info    0x00000000000039ac      0x3fe /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .debug_info    0x0000000000003daa      0xad2 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_info    0x000000000000487c       0xd7 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .debug_info    0x0000000000004953      0x934 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .debug_info    0x0000000000005287      0x91b /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .debug_info    0x0000000000005ba2      0x92d /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+
+.debug_abbrev   0x0000000000000000     0x1587
+ .debug_abbrev  0x0000000000000000      0x11d /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .debug_abbrev  0x000000000000011d       0xd7 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+ .debug_abbrev  0x00000000000001f4      0x183 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+ .debug_abbrev  0x0000000000000377      0x1db /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .debug_abbrev  0x0000000000000552      0x24c /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .debug_abbrev  0x000000000000079e      0x2c7 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ .debug_abbrev  0x0000000000000a65      0x12d /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .debug_abbrev  0x0000000000000b92      0x149 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .debug_abbrev  0x0000000000000cdb      0x29b /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_abbrev  0x0000000000000f76       0x97 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .debug_abbrev  0x000000000000100d      0x1d9 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .debug_abbrev  0x00000000000011e6      0x1cd /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .debug_abbrev  0x00000000000013b3      0x1d4 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+
+.debug_aranges  0x0000000000000000      0x1a0
+ .debug_aranges
+                0x0000000000000000       0x20 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .debug_aranges
+                0x0000000000000020       0x20 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+ .debug_aranges
+                0x0000000000000040       0x20 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+ .debug_aranges
+                0x0000000000000060       0x20 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .debug_aranges
+                0x0000000000000080       0x20 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .debug_aranges
+                0x00000000000000a0       0x20 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ .debug_aranges
+                0x00000000000000c0       0x20 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .debug_aranges
+                0x00000000000000e0       0x20 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .debug_aranges
+                0x0000000000000100       0x20 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_aranges
+                0x0000000000000120       0x20 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .debug_aranges
+                0x0000000000000140       0x20 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .debug_aranges
+                0x0000000000000160       0x20 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .debug_aranges
+                0x0000000000000180       0x20 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+
+.debug_line     0x0000000000000000     0x1481
+ .debug_line    0x0000000000000000      0x10f /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .debug_line    0x000000000000010f       0xaa /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+ .debug_line    0x00000000000001b9      0x1c5 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+ .debug_line    0x000000000000037e      0x1b2 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .debug_line    0x0000000000000530      0x2b4 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .debug_line    0x00000000000007e4      0x4cf /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ .debug_line    0x0000000000000cb3       0xab /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .debug_line    0x0000000000000d5e       0xb9 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .debug_line    0x0000000000000e17      0x168 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_line    0x0000000000000f7f       0x93 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .debug_line    0x0000000000001012      0x196 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .debug_line    0x00000000000011a8      0x172 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .debug_line    0x000000000000131a      0x167 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+
+.debug_str      0x0000000000000000     0x1b0d
+ .debug_str     0x0000000000000000      0x1a2 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+                                        0x1e9 (size before relaxing)
+ .debug_str     0x00000000000001a2       0xd4 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+                                        0x160 (size before relaxing)
+ .debug_str     0x0000000000000276      0x357 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+                                        0x426 (size before relaxing)
+ .debug_str     0x00000000000005cd      0x4b8 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+                                        0x628 (size before relaxing)
+ .debug_str     0x0000000000000a85      0x337 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+                                        0x8c4 (size before relaxing)
+ .debug_str     0x0000000000000dbc      0x646 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+                                        0xcbf (size before relaxing)
+ .debug_str     0x0000000000001402      0x14b /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+                                        0x1cf (size before relaxing)
+ .debug_str     0x000000000000154d      0x21e /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+                                        0x2b5 (size before relaxing)
+ .debug_str     0x000000000000176b      0x1b8 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+                                        0x698 (size before relaxing)
+ .debug_str     0x0000000000001923       0x36 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+                                         0xff (size before relaxing)
+ .debug_str     0x0000000000001959       0xe8 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+                                        0x562 (size before relaxing)
+ .debug_str     0x0000000000001a41       0x98 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+                                        0x53d (size before relaxing)
+ .debug_str     0x0000000000001ad9       0x34 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+                                        0x553 (size before relaxing)
+
+.comment        0x0000000000000000       0x31
+ .comment       0x0000000000000000       0x31 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+                                         0x32 (size before relaxing)
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .comment       0x0000000000000031       0x32 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .comment       0x0000000000000031       0x32 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .comment       0x0000000000000031       0x32 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .comment       0x0000000000000031       0x32 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+
+.ARM.attributes
+                0x0000000000000000       0x2c
+ .ARM.attributes
+                0x0000000000000000       0x2e /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .ARM.attributes
+                0x000000000000002e       0x2e /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+ .ARM.attributes
+                0x000000000000005c       0x2e /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+ .ARM.attributes
+                0x000000000000008a       0x2e /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .ARM.attributes
+                0x00000000000000b8       0x2e /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .ARM.attributes
+                0x00000000000000e6       0x2e /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ .ARM.attributes
+                0x0000000000000114       0x2e /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .ARM.attributes
+                0x0000000000000142       0x2e /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .ARM.attributes
+                0x0000000000000170       0x2e /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .ARM.attributes
+                0x000000000000019e       0x14 /home/mcor/tinhnn/PiRTOS/build/Demo/startup.o
+ .ARM.attributes
+                0x00000000000001b2       0x2e /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .ARM.attributes
+                0x00000000000001e0       0x30 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .ARM.attributes
+                0x0000000000000210       0x30 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .ARM.attributes
+                0x0000000000000240       0x30 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+
+.debug_frame    0x0000000000000000      0xd04
+ .debug_frame   0x0000000000000000       0xac /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/port.o
+ .debug_frame   0x00000000000000ac       0x90 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/portable/GCC/RaspberryPi/portisr.o
+ .debug_frame   0x000000000000013c       0xf0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/croutine.o
+ .debug_frame   0x000000000000022c       0xb0 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/list.o
+ .debug_frame   0x00000000000002dc      0x210 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/queue.o
+ .debug_frame   0x00000000000004ec      0x450 /home/mcor/tinhnn/PiRTOS/build/FreeRTOS/Source/tasks.o
+ .debug_frame   0x000000000000093c       0xf0 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/irq.o
+ .debug_frame   0x0000000000000a2c       0xf0 /home/mcor/tinhnn/PiRTOS/build/Demo/Drivers/gpio.o
+ .debug_frame   0x0000000000000b1c       0xd0 /home/mcor/tinhnn/PiRTOS/build//FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_frame   0x0000000000000bec       0x64 /home/mcor/tinhnn/PiRTOS/build/Demo/main.o
+ .debug_frame   0x0000000000000c50       0x44 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x0000000000000c94       0x30 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .debug_frame   0x0000000000000cc4       0x40 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
+
+.debug_loc      0x0000000000000000      0x5d1
+ .debug_loc     0x0000000000000000      0x25a /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memcpy-stub.o)
+ .debug_loc     0x000000000000025a      0x223 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-memset.o)
+ .debug_loc     0x000000000000047d      0x154 /usr/lib/arm-none-eabi/lib//libc.a(lib_a-strncpy.o)
