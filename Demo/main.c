@@ -68,8 +68,9 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-#include "Drivers/irq.h"
-#include "Drivers/gpio.h"
+#include "irq.h"
+#include "gpio.h"
+#include "uart.h"
 
 void task1(void *pParam) {
 
@@ -92,6 +93,14 @@ void task2(void *pParam) {
 	}
 }
 
+void task_uart(void *pParam) {
+	int i = 0;
+	while(1) {
+		i++;
+		uart_puts("Day la Free RTOS on Pi\n");
+		vTaskDelay(1000);
+	}
+}
 
 /**
  *	This is the systems main entry, some call it a boot thread.
@@ -102,9 +111,11 @@ void task2(void *pParam) {
 void main (void)
 {
 	SetGpioFunction(16, 1);			// RDY led
+    uart_init();
 
 	xTaskCreate(task1, "LED_0", 128, NULL, 0, NULL);
 	xTaskCreate(task2, "LED_1", 128, NULL, 0, NULL);
+    xTaskCreate(task_uart, "UART", 128, NULL, 0, NULL);
 
 	vTaskStartScheduler();
 

@@ -64,105 +64,69 @@
     the SafeRTOS brand: http://www.SafeRTOS.com.
 */
 
+#include "uart.h"
+#include "bcm2835.h"
 
-/*
- * The simplest possible implementation of pvPortMalloc().  Note that this
- * implementation does NOT allow allocated memory to be freed again.
- *
- * See heap_2.c, heap_3.c and heap_4.c for alternative implementations, and the 
- * memory management pages of http://www.FreeRTOS.org for more information.
- */
-#include <stdlib.h>
 
-/* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
-all the API functions to use the MPU wrappers.  That should only be done when
-task.h is included from an application file. */
-#define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+/* UART register */
+#define UART0_DR        ((volatile unsigned int*)(MMIO_BASE+0x00201000))
+#define UART0_FR        ((volatile unsigned int*)(MMIO_BASE+0x00201018))
+#define UART0_IBRD      ((volatile unsigned int*)(MMIO_BASE+0x00201024))
+#define UART0_FBRD      ((volatile unsigned int*)(MMIO_BASE+0x00201028))
+#define UART0_LCRH      ((volatile unsigned int*)(MMIO_BASE+0x0020102C))
+#define UART0_CR        ((volatile unsigned int*)(MMIO_BASE+0x00201030))
+#define UART0_IMSC      ((volatile unsigned int*)(MMIO_BASE+0x00201038))
+#define UART0_ICR       ((volatile unsigned int*)(MMIO_BASE+0x00201044))
 
-#include "FreeRTOS.h"
-#include "task.h"
 
-#undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
-
-/* Allocate the memory for the heap.  The struct is used to force byte
-alignment without using any non-portable code. */
-static union xRTOS_HEAP
+void uart_init()
 {
-	#if portBYTE_ALIGNMENT == 8
-		volatile portDOUBLE dDummy;
-	#else
-		volatile unsigned long ulDummy;
-	#endif	
-	unsigned char ucHeap[ configTOTAL_HEAP_SIZE ];
-} xHeap;
+    register unsigned int r;
 
-static size_t xNextFreeByte = ( size_t ) 0;
-/*-----------------------------------------------------------*/
+    /* initialize UART */
+    *UART0_CR = 0;         // turn off UART0
+    
+    /* map UART0 to GPIO pins */
+    r=*GPFSEL1;
+    r&=~((7<<12)|(7<<15)); // gpio14, gpio15
+    r|=(4<<12)|(4<<15);    // alt0
+    *GPFSEL1 = r;
+    *GPPUD = 0;            // enable pins 14 and 15
+    r=150; while(r--) { asm volatile("nop"); }
+    *GPPUDCLK0 = (1<<14)|(1<<15);
+    r=150; while(r--) { asm volatile("nop"); }
+    *GPPUDCLK0 = 0;        // flush GPIO setup
 
-void *pvPortMalloc( size_t xWantedSize )
-{
-void *pvReturn = NULL; 
-
-	/* Ensure that blocks are always aligned to the required number of bytes. */
-	#if portBYTE_ALIGNMENT != 1
-		if( xWantedSize & portBYTE_ALIGNMENT_MASK )
-		{
-			/* Byte alignment required. */
-			xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
-		}
-	#endif
-
-	vTaskSuspendAll();
-	{
-		/* Check there is enough room left for the allocation. */
-		if( ( ( xNextFreeByte + xWantedSize ) < configTOTAL_HEAP_SIZE ) &&
-			( ( xNextFreeByte + xWantedSize ) > xNextFreeByte )	)/* Check for overflow. */
-		{
-			/* Return the next free byte then increment the index past this
-			block. */
-			pvReturn = &( xHeap.ucHeap[ xNextFreeByte ] );
-			xNextFreeByte += xWantedSize;			
-		}	
-	}
-	xTaskResumeAll();
-	
-	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
-	{
-		if( pvReturn == NULL )
-		{
-			extern void vApplicationMallocFailedHook( void );
-			vApplicationMallocFailedHook();
-		}
-	}
-	#endif	
-
-	return pvReturn;
-}
-/*-----------------------------------------------------------*/
-
-void vPortFree( void *pv )
-{
-	/* Memory cannot be freed using this scheme.  See heap_2.c, heap_3.c and
-	heap_4.c for alternative implementations, and the memory management pages of 
-	http://www.FreeRTOS.org for more information. */
-	( void ) pv;
-	
-	/* Force an assert as it is invalid to call this function. */
-	configASSERT( pv == NULL );
-}
-/*-----------------------------------------------------------*/
-
-void vPortInitialiseBlocks( void )
-{
-	/* Only required when static memory is not cleared. */
-	xNextFreeByte = ( size_t ) 0;
-}
-/*-----------------------------------------------------------*/
-
-size_t xPortGetFreeHeapSize( void )
-{
-	return ( configTOTAL_HEAP_SIZE - xNextFreeByte );
+    *UART0_ICR = 0x7FF;    // clear interrupts
+    *UART0_IBRD = 2;       // 115200 baud
+    *UART0_FBRD = 0xB;
+    *UART0_LCRH = 0b11<<5; // 8n1
+    *UART0_CR = 0x301;     // enable Tx, Rx, FIFO
 }
 
+void uart_send(unsigned int c) {
+    /* wait until we can send */
+    do{asm volatile("nop");}while(*UART0_FR&0x20);
+    /* write the character to the buffer */
+    *UART0_DR=c;
+}
 
+char uart_getc() {
+    char r;
+    /* wait until something is in the buffer */
+    do{asm volatile("nop");}while(*UART0_FR&0x10);
+    /* read it and return */
+    r=(char)(*UART0_DR);
+    /* convert carrige return to newline */
+    return r=='\r'?'\n':r;
+}
+
+void uart_puts(char *s) {
+    while(*s) {
+        /* convert newline to carrige return + newline */
+        if(*s=='\n')
+            uart_send('\r');
+        uart_send(*s++);
+    }
+}
 

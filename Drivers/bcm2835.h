@@ -64,105 +64,28 @@
     the SafeRTOS brand: http://www.SafeRTOS.com.
 */
 
+#ifndef _BCM2835_H_
+#define _BCM2835_H_
 
-/*
- * The simplest possible implementation of pvPortMalloc().  Note that this
- * implementation does NOT allow allocated memory to be freed again.
- *
- * See heap_2.c, heap_3.c and heap_4.c for alternative implementations, and the 
- * memory management pages of http://www.FreeRTOS.org for more information.
- */
-#include <stdlib.h>
+#define MMIO_BASE 0x7E000000
 
-/* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
-all the API functions to use the MPU wrappers.  That should only be done when
-task.h is included from an application file. */
-#define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+#define GPFSEL0         ((volatile unsigned int*)(MMIO_BASE+0x00200000))
+#define GPFSEL1         ((volatile unsigned int*)(MMIO_BASE+0x00200004))
+#define GPFSEL2         ((volatile unsigned int*)(MMIO_BASE+0x00200008))
+#define GPFSEL3         ((volatile unsigned int*)(MMIO_BASE+0x0020000C))
+#define GPFSEL4         ((volatile unsigned int*)(MMIO_BASE+0x00200010))
+#define GPFSEL5         ((volatile unsigned int*)(MMIO_BASE+0x00200014))
+#define GPSET0          ((volatile unsigned int*)(MMIO_BASE+0x0020001C))
+#define GPSET1          ((volatile unsigned int*)(MMIO_BASE+0x00200020))
+#define GPCLR0          ((volatile unsigned int*)(MMIO_BASE+0x00200028))
+#define GPLEV0          ((volatile unsigned int*)(MMIO_BASE+0x00200034))
+#define GPLEV1          ((volatile unsigned int*)(MMIO_BASE+0x00200038))
+#define GPEDS0          ((volatile unsigned int*)(MMIO_BASE+0x00200040))
+#define GPEDS1          ((volatile unsigned int*)(MMIO_BASE+0x00200044))
+#define GPHEN0          ((volatile unsigned int*)(MMIO_BASE+0x00200064))
+#define GPHEN1          ((volatile unsigned int*)(MMIO_BASE+0x00200068))
+#define GPPUD           ((volatile unsigned int*)(MMIO_BASE+0x00200094))
+#define GPPUDCLK0       ((volatile unsigned int*)(MMIO_BASE+0x00200098))
+#define GPPUDCLK1       ((volatile unsigned int*)(MMIO_BASE+0x0020009C))
 
-#include "FreeRTOS.h"
-#include "task.h"
-
-#undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
-
-/* Allocate the memory for the heap.  The struct is used to force byte
-alignment without using any non-portable code. */
-static union xRTOS_HEAP
-{
-	#if portBYTE_ALIGNMENT == 8
-		volatile portDOUBLE dDummy;
-	#else
-		volatile unsigned long ulDummy;
-	#endif	
-	unsigned char ucHeap[ configTOTAL_HEAP_SIZE ];
-} xHeap;
-
-static size_t xNextFreeByte = ( size_t ) 0;
-/*-----------------------------------------------------------*/
-
-void *pvPortMalloc( size_t xWantedSize )
-{
-void *pvReturn = NULL; 
-
-	/* Ensure that blocks are always aligned to the required number of bytes. */
-	#if portBYTE_ALIGNMENT != 1
-		if( xWantedSize & portBYTE_ALIGNMENT_MASK )
-		{
-			/* Byte alignment required. */
-			xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
-		}
-	#endif
-
-	vTaskSuspendAll();
-	{
-		/* Check there is enough room left for the allocation. */
-		if( ( ( xNextFreeByte + xWantedSize ) < configTOTAL_HEAP_SIZE ) &&
-			( ( xNextFreeByte + xWantedSize ) > xNextFreeByte )	)/* Check for overflow. */
-		{
-			/* Return the next free byte then increment the index past this
-			block. */
-			pvReturn = &( xHeap.ucHeap[ xNextFreeByte ] );
-			xNextFreeByte += xWantedSize;			
-		}	
-	}
-	xTaskResumeAll();
-	
-	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
-	{
-		if( pvReturn == NULL )
-		{
-			extern void vApplicationMallocFailedHook( void );
-			vApplicationMallocFailedHook();
-		}
-	}
-	#endif	
-
-	return pvReturn;
-}
-/*-----------------------------------------------------------*/
-
-void vPortFree( void *pv )
-{
-	/* Memory cannot be freed using this scheme.  See heap_2.c, heap_3.c and
-	heap_4.c for alternative implementations, and the memory management pages of 
-	http://www.FreeRTOS.org for more information. */
-	( void ) pv;
-	
-	/* Force an assert as it is invalid to call this function. */
-	configASSERT( pv == NULL );
-}
-/*-----------------------------------------------------------*/
-
-void vPortInitialiseBlocks( void )
-{
-	/* Only required when static memory is not cleared. */
-	xNextFreeByte = ( size_t ) 0;
-}
-/*-----------------------------------------------------------*/
-
-size_t xPortGetFreeHeapSize( void )
-{
-	return ( configTOTAL_HEAP_SIZE - xNextFreeByte );
-}
-
-
-
+#endif /* _BCM2835_H_ */
