@@ -113,8 +113,8 @@ void main (void)
 	SetGpioFunction(16, 1);			// RDY led
     uart_init();
 
-	xTaskCreate(task1, "LED_0", 128, NULL, 0, NULL);
-	xTaskCreate(task2, "LED_1", 128, NULL, 0, NULL);
+	xTaskCreate(task1, "LED_OFF", 128, NULL, 0, NULL);
+	xTaskCreate(task2, "LED_ON", 128, NULL, 0, NULL);
     xTaskCreate(task_uart, "UART", 128, NULL, 0, NULL);
 
 	vTaskStartScheduler();
